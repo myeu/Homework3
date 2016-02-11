@@ -7,12 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
 import java.util.List;
-
-import static java.lang.Math.min;
 
 /**
  * Created by marisayeung on 2/10/16.

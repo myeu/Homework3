@@ -17,8 +17,8 @@ import java.util.List;
 
 public class NotesList extends AppCompatActivity {
 
-    private static final String NOTE_CAPTION = "MyNotes.note_caption";
-    private static final String NOTE_FNAME = "MyNotes.note_filename";
+    public static final String NOTE_CAPTION = "MyNotes.note_caption";
+    public static final String NOTE_FNAME = "MyNotes.note_filename";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +28,11 @@ public class NotesList extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.custom_notes_list_view);
 
         List<Note> notes = new ArrayList<>();
-        notes.add(new Note("a.jpg", "Did you ever get a feeling there's a ZAMP in the LAMP?"));
-        notes.add(new Note("b.jpg", "Left foot Left foot, Right foot Right. Feet in the day. Feet in the night"));
-        notes.add(new Note("c.jpg", "Big C little C what begins with c?  Camel on the celing c, c, c!"));
-        notes.add(new Note("d.jpg", "We took a look, we saw a nook. On his head, he had a hook."));
-        notes.add(new Note("e.jpg", "One fish, two fish. Red fish, blue fish. Old fish, new fish."));
+        notes.add(new Note("wocket.jpg", "Did you ever get the feeling there's a ZAMP in the LAMP?"));
+        notes.add(new Note("footbook.jpg", "Left foot Left foot, Right foot Right. Feet in the day. Feet in the night"));
+        notes.add(new Note("abc.jpg", "Big C little C what begins with c?  Camel on the ceiling c, c, c!"));
+        notes.add(new Note("nook.jpg", "We took a look, we saw a nook. On his head, he had a hook."));
+        notes.add(new Note("onefish.jpg", "One fish, two fish. Red fish, blue fish. Old fish, new fish."));
 
         NotesAdapter notesAdapter = new NotesAdapter(this, R.layout.notes_list_row, notes);
         listView.setAdapter(notesAdapter);

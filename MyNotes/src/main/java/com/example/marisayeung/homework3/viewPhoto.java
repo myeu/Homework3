@@ -1,11 +1,20 @@
 package com.example.marisayeung.homework3;
 
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class viewPhoto extends AppCompatActivity {
 
@@ -15,6 +24,24 @@ public class viewPhoto extends AppCompatActivity {
         setContentView(R.layout.activity_view_photo);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Intent intent = getIntent();
+        String fname = intent.getStringExtra(NotesList.NOTE_FNAME);
+
+        TextView title = (TextView) findViewById(R.id.photo_title);
+        title.setText(fname);
+
+        try {
+            ImageView image = (ImageView) findViewById(R.id.photo);
+            InputStream inputStream = getAssets().open(intent.getStringExtra(NotesList.NOTE_FNAME));
+            Drawable drawable = Drawable.createFromStream(inputStream, null);
+            image.setImageDrawable(drawable);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        TextView caption = (TextView) findViewById(R.id.photo_caption);
+        caption.setText(intent.getStringExtra(NotesList.NOTE_CAPTION));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
