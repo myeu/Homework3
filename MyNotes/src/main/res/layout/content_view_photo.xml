@@ -9,11 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.marisayeung.homework3.NotesList"
-    tools:showIn="@layout/activity_notes_list">
+    tools:context="com.example.marisayeung.homework3.viewPhoto"
+    tools:showIn="@layout/activity_view_photo">
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/custom_notes_list_view" />
 </RelativeLayout>
