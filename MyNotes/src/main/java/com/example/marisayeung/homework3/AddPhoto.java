@@ -1,5 +1,6 @@
 package com.example.marisayeung.homework3;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -24,8 +25,17 @@ public class AddPhoto extends AppCompatActivity {
 
         String new_fname = (new_caption.substring(0,5) + ".jpg");
 
+        NotesDbHelper dbHelper = NotesDbHelper.getInstance(this);
 
+        dbHelper.createPhotoNote(new_fname, new_caption);
 
+        //finish();
+        viewList();
+    }
+
+    public void viewList() {
+        Intent intent = new Intent(this, NotesList.class);
+        startActivity(intent);
     }
 
 }

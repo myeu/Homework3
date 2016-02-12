@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,26 +37,24 @@ public class NotesList extends AppCompatActivity {
 
         List<Note> notes = dbHelper.getAllPhotoNotes();
 
-        ListView listView = (ListView) findViewById(R.id.custom_notes_list_view);
+        if (notes.size() > 0) {
+            ListView listView = (ListView) findViewById(R.id.custom_notes_list_view);
+            NotesAdapter notesAdapter = new NotesAdapter(this, R.layout.notes_list_row, notes);
+            listView.setAdapter(notesAdapter);
 
-//        List<Note> notes = new ArrayList<>();
-//        notes.add(new Note("wocket.jpg", "Did you ever get the feeling there's a ZAMP in the LAMP?"));
-//        notes.add(new Note("footbook.jpg", "Left foot Left foot, Right foot Right. Feet in the day. Feet in the night"));
-//        notes.add(new Note("abc.jpg", "Big C little C what begins with c?  Camel on the ceiling c, c, c!"));
-//        notes.add(new Note("nook.jpg", "We took a look, we saw a nook. On his head, he had a hook."));
-//        notes.add(new Note("onefish.jpg", "One fish, two fish. Red fish, blue fish. Old fish, new fish."));
+            listView.setOnItemClickListener((new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+                    Note note = (Note) adapter.getItemAtPosition(position);
 
-        NotesAdapter notesAdapter = new NotesAdapter(this, R.layout.notes_list_row, notes);
-        listView.setAdapter(notesAdapter);
-
-        listView.setOnItemClickListener((new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-                Note note = (Note) adapter.getItemAtPosition(position);
-
-                viewDetail(note);
-            }
-        }));
+                    viewDetail(note);
+                }
+            }));
+        }
+        else {
+            TextView emptyList = (TextView) findViewById(R.id.empty_list);
+            emptyList.setText("Tap + to create a new note");
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

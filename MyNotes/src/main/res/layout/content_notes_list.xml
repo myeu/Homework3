@@ -12,6 +12,15 @@
     tools:context="com.example.marisayeung.homework3.NotesList"
     tools:showIn="@layout/activity_notes_list">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/empty_list"
+        android:textColor="#999999"
+        android:textStyle="italic"
+        android:textSize="18dp"
+        android:layout_centerHorizontal="true"/>
+
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -91,11 +91,13 @@ public class NotesDbHelper extends SQLiteOpenHelper {
         );
 
         List<Note> notes = new ArrayList<>();
-        while (cursor.moveToNext()) {
-            String path = cursor.getString(0);
-            String caption = cursor.getString(1);
-            Note note = new Note(path, caption);
-            notes.add(note);
+        if (cursor != null && cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                String path = cursor.getString(0);
+                String caption = cursor.getString(1);
+                Note note = new Note(path, caption);
+                notes.add(note);
+            }
         }
         return notes;
     }
