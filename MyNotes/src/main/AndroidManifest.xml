@@ -21,6 +21,10 @@
         <activity
             android:name=".viewPhoto"
             android:label="@string/title_activity_view_photo"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AddPhoto"
+            android:label="@string/title_activity_add_photo"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

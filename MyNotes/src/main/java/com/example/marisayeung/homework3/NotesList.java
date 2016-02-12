@@ -53,8 +53,9 @@ public class NotesList extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                viewAddPhoto();
             }
         });
     }
@@ -63,6 +64,11 @@ public class NotesList extends AppCompatActivity {
         Intent intent = new Intent(this, viewPhoto.class);
         intent.putExtra(NOTE_FNAME, note.getFilename());
         intent.putExtra(NOTE_CAPTION, note.getCaption());
+        startActivity(intent);
+    }
+
+    public void viewAddPhoto() {
+        Intent intent = new Intent(this, AddPhoto.class);
         startActivity(intent);
     }
 
