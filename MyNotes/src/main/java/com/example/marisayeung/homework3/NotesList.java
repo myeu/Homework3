@@ -1,6 +1,7 @@
 package com.example.marisayeung.homework3;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,14 +26,24 @@ public class NotesList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes_list);
 
+        NotesDbHelper dbHelper = NotesDbHelper.getInstance(this);
+
+//        dbHelper.createPhotoNote("wocket.jpg", "Did you ever get the feeling there's a ZAMP in the LAMP?");
+//        dbHelper.createPhotoNote("footbook.jpg", "Left foot Left foot, Right foot Right. Feet in the day. Feet in the night");
+//        dbHelper.createPhotoNote("abc.jpg", "Big C little C what begins with c?  Camel on the ceiling c, c, c!");
+//        dbHelper.createPhotoNote("nook.jpg", "We took a look, we saw a nook. On his head, he had a hook.");
+//        dbHelper.createPhotoNote("onefish.jpg", "One fish, two fish. Red fish, blue fish. Old fish, new fish.");
+
+        List<Note> notes = dbHelper.getAllPhotoNotes();
+
         ListView listView = (ListView) findViewById(R.id.custom_notes_list_view);
 
-        List<Note> notes = new ArrayList<>();
-        notes.add(new Note("wocket.jpg", "Did you ever get the feeling there's a ZAMP in the LAMP?"));
-        notes.add(new Note("footbook.jpg", "Left foot Left foot, Right foot Right. Feet in the day. Feet in the night"));
-        notes.add(new Note("abc.jpg", "Big C little C what begins with c?  Camel on the ceiling c, c, c!"));
-        notes.add(new Note("nook.jpg", "We took a look, we saw a nook. On his head, he had a hook."));
-        notes.add(new Note("onefish.jpg", "One fish, two fish. Red fish, blue fish. Old fish, new fish."));
+//        List<Note> notes = new ArrayList<>();
+//        notes.add(new Note("wocket.jpg", "Did you ever get the feeling there's a ZAMP in the LAMP?"));
+//        notes.add(new Note("footbook.jpg", "Left foot Left foot, Right foot Right. Feet in the day. Feet in the night"));
+//        notes.add(new Note("abc.jpg", "Big C little C what begins with c?  Camel on the ceiling c, c, c!"));
+//        notes.add(new Note("nook.jpg", "We took a look, we saw a nook. On his head, he had a hook."));
+//        notes.add(new Note("onefish.jpg", "One fish, two fish. Red fish, blue fish. Old fish, new fish."));
 
         NotesAdapter notesAdapter = new NotesAdapter(this, R.layout.notes_list_row, notes);
         listView.setAdapter(notesAdapter);
@@ -53,8 +64,6 @@ public class NotesList extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
                 viewAddPhoto();
             }
         });

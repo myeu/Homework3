@@ -27,7 +27,17 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
+        android:id="@+id/edit_caption"
         android:layout_gravity="center_horizontal"
         android:hint="Caption" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:backgroundTint="@color/colorAccent"
+        android:textColor="#fff"
+        android:id="@+id/save"
+        android:onClick="onSave"/>
+
 </LinearLayout>
