@@ -22,7 +22,14 @@
         android:layout_gravity="center_horizontal"
         android:src="@drawable/ic_camera_alt_24dp"
         android:tint="#fff"
-        android:backgroundTint="@color/colorAccent"/>
+        android:backgroundTint="@color/colorAccent"
+        android:onClick="dispatchTakePictureIntent"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/thumbnail"
+        android:layout_gravity="center_horizontal"/>
 
     <EditText
         android:layout_width="match_parent"

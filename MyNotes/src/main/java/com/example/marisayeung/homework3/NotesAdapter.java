@@ -29,7 +29,9 @@ public class NotesAdapter extends ArrayAdapter<Note> {
         View row = inflater.inflate(R.layout.notes_list_row, null);
 
         TextView filenameView = (TextView) row.findViewById(R.id.rowTitle);
-        filenameView.setText(note.getFilename());
+        String[] splitPath = note.getFilename().split("/");
+        String fName = splitPath[splitPath.length - 1];
+        filenameView.setText(fName);
 
 //        Create a one line brief preview of the caption for the list view
         TextView captionView = (TextView) row.findViewById(R.id.rowText);

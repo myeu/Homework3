@@ -1,6 +1,8 @@
 package com.example.marisayeung.homework3;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -28,19 +30,23 @@ public class viewPhoto extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
-        String fname = intent.getStringExtra(NotesList.NOTE_FNAME);
-
+        String path = intent.getStringExtra(NotesList.NOTE_FNAME);
+        String[] splitPath = path.split("/");
+        String fName = splitPath[splitPath.length - 1];
         TextView title = (TextView) findViewById(R.id.photo_title);
-        title.setText(fname);
+        title.setText(fName);
 
-        try {
+        ImageView image = (ImageView) findViewById(R.id.photo);
+        setPic(image, path);
+
+        /*try {
             ImageView image = (ImageView) findViewById(R.id.photo);
             InputStream inputStream = getAssets().open(intent.getStringExtra(NotesList.NOTE_FNAME));
             Drawable drawable = Drawable.createFromStream(inputStream, null);
             image.setImageDrawable(drawable);
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         TextView caption = (TextView) findViewById(R.id.photo_caption);
         caption.setText(intent.getStringExtra(NotesList.NOTE_CAPTION));
@@ -49,11 +55,35 @@ public class viewPhoto extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
                 viewAddPhoto();
             }
         });
+    }
+
+    private void setPic(ImageView imageView, String path) {
+        // Get the dimensions of the View
+        int targetW = imageView.getWidth();
+        int targetH = imageView.getHeight();
+
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        //bmOptions.inJustDecodeBounds = true;
+        bmOptions.inSampleSize = 3;
+        //BitmapFactory.decodeFile(path, bmOptions);
+        //int photoW = bmOptions.outWidth;
+        //int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        //int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+
+        // Decode the image file into a Bitmap sized to fill the View
+        //bmOptions.inJustDecodeBounds = false;
+        //bmOptions.inSampleSize = scaleFactor;
+        //bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(path, bmOptions);
+        imageView.setImageBitmap(bitmap);
     }
 
     public void viewAddPhoto() {
