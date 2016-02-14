@@ -56,6 +56,7 @@ public class viewPhoto extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 viewAddPhoto();
+                viewNotesList();
             }
         });
     }
@@ -84,6 +85,11 @@ public class viewPhoto extends AppCompatActivity {
 
         Bitmap bitmap = BitmapFactory.decodeFile(path, bmOptions);
         imageView.setImageBitmap(bitmap);
+    }
+
+    public void viewNotesList() {
+        Intent intent = new Intent(this, NotesList.class);
+        startActivity(intent);
     }
 
     public void viewAddPhoto() {

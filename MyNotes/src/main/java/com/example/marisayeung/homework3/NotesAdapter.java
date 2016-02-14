@@ -40,7 +40,7 @@ public class NotesAdapter extends ArrayAdapter<Note> {
         if (cap_length < 45) {
             caption_preview = note.getCaption();
         } else {
-            caption_preview = note.getCaption().substring(0,45) + "...";
+            caption_preview = note.getCaption().substring(0,20) + "...";
         }
         captionView.setText(caption_preview);
 

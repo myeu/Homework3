@@ -33,6 +33,7 @@ public class AddPhoto extends AppCompatActivity {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     String mCurrentPhotoPath;
+    boolean photoTaken = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,10 @@ public class AddPhoto extends AppCompatActivity {
         setContentView(R.layout.activity_add_photo);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if(photoTaken) {
+            setThumbnailIcon();
+        }
     }
 
     public void dispatchTakePictureIntent(View view) {
@@ -112,6 +117,8 @@ public class AddPhoto extends AppCompatActivity {
 
         NotesDbHelper dbHelper = NotesDbHelper.getInstance(this);
 
+        Log.d("marisatest", mCurrentPhotoPath);
+
         dbHelper.createPhotoNote(mCurrentPhotoPath, new_caption);
 
         finish();
@@ -121,8 +128,13 @@ public class AddPhoto extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            ImageButton imageButton = (ImageButton) findViewById(R.id.imageButton);
-            imageButton.setImageResource(R.drawable.ic_image_24dp);
+            photoTaken = true;
+            setThumbnailIcon();
         }
+    }
+
+    private void setThumbnailIcon() {
+        ImageButton imageButton = (ImageButton) findViewById(R.id.imageButton);
+        imageButton.setImageResource(R.drawable.ic_image_24dp);
     }
 }
