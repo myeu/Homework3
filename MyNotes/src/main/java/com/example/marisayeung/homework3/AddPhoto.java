@@ -16,10 +16,13 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.marisayeung.homework3.NotesDbHelper;
 import com.example.marisayeung.homework3.NotesList;
 import com.example.marisayeung.homework3.R;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -42,46 +45,52 @@ public class AddPhoto extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // set the photo taken icon if photo was taken and then activity reloaded
         if(photoTaken) {
             setThumbnailIcon();
         }
     }
 
+    /*
+        Use the phone's camera to take a new photo to insert into the new note
+     */
     public void dispatchTakePictureIntent(View view) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             File photoFile = null;
             try {
+                // create a file to save the photo in
                 photoFile = createImageFile();
             } catch (IOException ex) {
                 ex.printStackTrace();
                 Log.d("marisatest", "photoFile is null");
             }
             if (photoFile != null) {
+                // file was created successfully, open the camera
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             }
         }
     }
 
-
+    /*
+        Create the uniquely named file to save the photo we will take
+     */
     private File createImageFile() throws IOException {
+        // form unique filename
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
         String imageFileName = "JPEG_" + timeStamp;
-
-        Log.d("marisatest", imageFileName);
 
         if (!isExternalStorageWritable()) {
             Log.d("marisatest", "external storage not writable");
         }
 
+        // get pathname to use for file
         File storageDir = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES);
 
-        Log.d("marisatest", storageDir.toString());
         File image;
         try {
-
             image = File.createTempFile(
                     imageFileName,
                     ".jpg",
@@ -93,16 +102,14 @@ public class AddPhoto extends AppCompatActivity {
             return null;
         }
 
-        if (image == null) {
-            Log.d("marisatest", "image is null");
-        }
-        Log.d("marisatest", image.toString());
-
-//        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        // save path for later
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
 
+    /*
+        check the state of external storage
+     */
     public boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
@@ -111,18 +118,27 @@ public class AddPhoto extends AppCompatActivity {
         return false;
     }
 
+    /*
+        User clicked the save button to save the image path and caption to the db
+     */
     public void onSave(View view) {
+        if (!photoTaken) {
+            TextView errorField = (TextView) findViewById(R.id.error_field);
+            errorField.setText("Please take a photo.");
+            return;
+        }
         EditText caption = (EditText) findViewById(R.id.edit_caption);
         String new_caption = caption.getText().toString();
+        if (new_caption.equals("")) {
+            caption.setError("Please enter a caption.");
+            return;
+        }
 
         NotesDbHelper dbHelper = NotesDbHelper.getInstance(this);
-
-        Log.d("marisatest", mCurrentPhotoPath);
 
         dbHelper.createPhotoNote(mCurrentPhotoPath, new_caption);
 
         finish();
-        //viewList();
     }
 
     @Override
@@ -130,6 +146,10 @@ public class AddPhoto extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             photoTaken = true;
             setThumbnailIcon();
+
+            // clear missing photo error if there was one
+            TextView errorField = (TextView) findViewById(R.id.error_field);
+            errorField.setText("");
         }
     }
 
